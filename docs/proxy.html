@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Proxy hacia el backend</title>
+  <style>
+    body { font-family: "Segoe UI", sans-serif; margin: 0; background: #f4f6f8; color: #1c2430; line-height: 1.55; }
+    header { background: #0a6ed1; color: #fff; padding: 1.2rem 1.5rem; }
+    nav { display: flex; flex-wrap: wrap; gap: .75rem; padding: .8rem 1.5rem; background: #fff; border-bottom: 1px solid #d9e2ec; }
+    nav a { color: #0a6ed1; text-decoration: none; }
+    main { max-width: 52rem; margin: 0 auto; padding: 1.5rem; }
+    pre { background: #1c2430; color: #f4f6f8; padding: 1rem; overflow: auto; border-radius: 8px; }
+    code { font-family: Consolas, monospace; }
+  </style>
+</head>
+<body>
+  <header><h1>Proxy</h1><p>Archivo <code>uicompras/ui5.yaml</code>. El navegador habla con el servidor de Fiori; ese servidor reenvía <code>/odata</code>.</p></header>
+  <nav>
+    <a href="index.html">Conexión</a>
+    <a href="proxy.html">Proxy</a>
+    <a href="lista.html">Lista</a>
+    <a href="registro.html">Registro</a>
+    <a href="anotaciones.html">Anotaciones</a>
+  </nav>
+  <main>
+    <pre><code>backend:
+  - path: /odata
+    url: http://localhost:4004</code></pre>
+    <p>En <code>manifest.json</code> el data source usa la ruta relativa <code>/odata/v4/compras/</code>. Gracias al proxy, esa ruta sale del puerto de la UI y llega al CAP que escucha en el 4004. Las librerías UI5 (<code>/resources</code>) no van al backend: salen de <code>https://ui5.sap.com</code>.</p>
+    <p>Si el backend está apagado, la lista no tiene metadata y la pantalla no arma columnas. El proxy no transforma el JSON: solo cambia el host.</p>
+  </main>
+</body>
+</html>

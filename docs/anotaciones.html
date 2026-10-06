@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Anotaciones de la UI</title>
+  <style>
+    body { font-family: "Segoe UI", sans-serif; margin: 0; background: #f4f6f8; color: #1c2430; line-height: 1.55; }
+    header { background: #0a6ed1; color: #fff; padding: 1.2rem 1.5rem; }
+    nav { display: flex; flex-wrap: wrap; gap: .75rem; padding: .8rem 1.5rem; background: #fff; border-bottom: 1px solid #d9e2ec; }
+    nav a { color: #0a6ed1; text-decoration: none; }
+    main { max-width: 52rem; margin: 0 auto; padding: 1.5rem; }
+    pre { background: #1c2430; color: #f4f6f8; padding: 1rem; overflow: auto; border-radius: 8px; }
+    code { font-family: Consolas, monospace; }
+  </style>
+</head>
+<body>
+  <header><h1>Anotaciones</h1><p><code>uicompras/annotations.cds</code> declara la pantalla. El servicio que corre las publica en el metadata.</p></header>
+  <nav>
+    <a href="index.html">Conexión</a>
+    <a href="proxy.html">Proxy</a>
+    <a href="lista.html">Lista</a>
+    <a href="registro.html">Registro</a>
+    <a href="anotaciones.html">Anotaciones</a>
+  </nav>
+  <main>
+    <p>Este archivo vive en el frontend, pero <code>cds watch</code> no lo compila. La copia que viaja en <code>GET $metadata</code> es <code>compras-empresariales-cap/srv/compras-ui.cds</code>. Las dos dicen lo mismo, para que la UI y el servicio no se desalineen.</p>
+    <p>Antes la lista pedía <code>proveedor</code> y <code>total</code>. Esos campos no existen en el modelo. Ahora apunta a <code>folio</code>, <code>estado</code>, <code>importeTotal</code> y <code>createdAt</code>.</p>
+    <pre><code>UI.LineItem : [
+    { Value : folio, Label : 'Folio' },
+    { Value : estado, Label : 'Estado' },
+    { Value : importeTotal, Label : 'Importe total' },
+    { Value : createdAt, Label : 'Fecha creación' }
+],
+UI.Facets : [
+    { Label : 'Datos generales', Target : '@UI.FieldGroup#Cabecera' },
+    { Label : 'Artículos', Target : 'posiciones/@UI.LineItem' }
+]</code></pre>
+    <p><code>UI.FieldGroup#Cabecera</code> es el formulario del folio. <code>posiciones/@UI.LineItem</code> es la tabla de artículos del registro. <code>UI.DataFieldForAction</code> coloca Aprobar y Rechazar. <code>@Common.FieldControl: #ReadOnly</code> impide editar estado e importe en la object page.</p>
+  </main>
+</body>
+</html>

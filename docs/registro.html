@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Registrar una orden</title>
+  <style>
+    body { font-family: "Segoe UI", sans-serif; margin: 0; background: #f4f6f8; color: #1c2430; line-height: 1.55; }
+    header { background: #0a6ed1; color: #fff; padding: 1.2rem 1.5rem; }
+    nav { display: flex; flex-wrap: wrap; gap: .75rem; padding: .8rem 1.5rem; background: #fff; border-bottom: 1px solid #d9e2ec; }
+    nav a { color: #0a6ed1; text-decoration: none; }
+    main { max-width: 52rem; margin: 0 auto; padding: 1.5rem; }
+    code { font-family: Consolas, monospace; }
+  </style>
+</head>
+<body>
+  <header><h1>Registro de la orden</h1><p>Crear no guarda todavía. Guardar sí.</p></header>
+  <nav>
+    <a href="index.html">Conexión</a>
+    <a href="proxy.html">Proxy</a>
+    <a href="lista.html">Lista</a>
+    <a href="registro.html">Registro</a>
+    <a href="anotaciones.html">Anotaciones</a>
+  </nav>
+  <main>
+    <p>Lo usa <code>alice</code> (Comprador). <code>bob</code> no tiene permiso de CREATE, así que no puede abrir el alta.</p>
+    <ol>
+      <li>En la lista, Crear. Fiori hace <code>POST /OrdenesCompra</code> y abre la object page en borrador. El estado sigue en Pendiente y todavía no hay validación.</li>
+      <li>La cabecera pide el folio. Estado e importe total están en solo lectura: el primero lo asigna el servidor al guardar y el segundo se calcula al leer.</li>
+      <li>La sección Artículos es la composición <code>posiciones</code>. Cada fila lleva material, cantidad y precio unitario.</li>
+      <li>Guardar llama a <code>draftActivate</code>. El <code>before CREATE</code> del backend exige artículos con cantidad y precio mayores a cero. Si el total pasa de 15000, la orden queda retenida. Si no, queda aprobada automáticamente.</li>
+      <li>Descartar el borrador no borra una orden activa. Es otro evento, distinto del DELETE de una orden ya guardada.</li>
+    </ol>
+    <p>Sin borrador, Fiori crearía la cabecera vacía y el <code>before CREATE</code> la rechazaría al instante por no traer artículos. El borrador deja llenar el folio y la tabla, y corre la regla al confirmar.</p>
+  </main>
+</body>
+</html>

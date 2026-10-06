@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lista de órdenes</title>
+  <style>
+    body { font-family: "Segoe UI", sans-serif; margin: 0; background: #f4f6f8; color: #1c2430; line-height: 1.55; }
+    header { background: #0a6ed1; color: #fff; padding: 1.2rem 1.5rem; }
+    nav { display: flex; flex-wrap: wrap; gap: .75rem; padding: .8rem 1.5rem; background: #fff; border-bottom: 1px solid #d9e2ec; }
+    nav a { color: #0a6ed1; text-decoration: none; }
+    main { max-width: 52rem; margin: 0 auto; padding: 1.5rem; }
+    pre { background: #1c2430; color: #f4f6f8; padding: 1rem; overflow: auto; border-radius: 8px; }
+    code { font-family: Consolas, monospace; }
+  </style>
+</head>
+<body>
+  <header><h1>Lista</h1><p>La primera pantalla es un List Report de <code>OrdenesCompra</code>.</p></header>
+  <nav>
+    <a href="index.html">Conexión</a>
+    <a href="proxy.html">Proxy</a>
+    <a href="lista.html">Lista</a>
+    <a href="registro.html">Registro</a>
+    <a href="anotaciones.html">Anotaciones</a>
+  </nav>
+  <main>
+    <p>El manifest declara la ruta vacía hacia <code>sap.fe.templates.ListReport</code> con <code>contextPath: /OrdenesCompra</code>. Al abrir, Fiori hace un <code>GET /odata/v4/compras/$metadata</code> y después un <code>GET /odata/v4/compras/OrdenesCompra</code>.</p>
+    <p>Las columnas no están en un XML de vista. Salen de <code>UI.LineItem</code>: folio, estado, importe total y fecha de creación. Los filtros de la barra son <code>UI.SelectionFields</code>: folio y estado. <code>importeTotal</code> no se filtra en la base porque es virtual; el backend lo calcula en el <code>after READ</code>.</p>
+    <p>En cada fila pueden aparecer Aprobar y Rechazar. El servicio solo los concede al rol Aprobador, así que con <code>alice</code> el backend responde 403 si se invocan, y con <code>bob</code> sí cambian una orden retenida.</p>
+    <pre><code>"targets": {
+  "OrdenesCompraList": {
+    "name": "sap.fe.templates.ListReport",
+    "options": {
+      "settings": { "contextPath": "/OrdenesCompra" }
+    }
+  }
+}</code></pre>
+  </main>
+</body>
+</html>

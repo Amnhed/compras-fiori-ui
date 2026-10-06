@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fiori y el servicio de compras</title>
+  <style>
+    body { font-family: "Segoe UI", sans-serif; margin: 0; background: #f4f6f8; color: #1c2430; line-height: 1.55; }
+    header { background: #0a6ed1; color: #fff; padding: 1.2rem 1.5rem; }
+    nav { display: flex; flex-wrap: wrap; gap: .75rem; padding: .8rem 1.5rem; background: #fff; border-bottom: 1px solid #d9e2ec; }
+    nav a { color: #0a6ed1; text-decoration: none; }
+    main { max-width: 52rem; margin: 0 auto; padding: 1.5rem; }
+    .flow { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; }
+    .box { background: #fff; border: 1px solid #d9e2ec; border-radius: 8px; padding: .55rem .75rem; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Cómo se engancha Fiori</h1>
+    <p>Esta UI no guarda órdenes. Pide OData al backend y pinta lo que dicen las anotaciones.</p>
+  </header>
+  <nav>
+    <a href="index.html">Conexión</a>
+    <a href="proxy.html">Proxy</a>
+    <a href="lista.html">Lista</a>
+    <a href="registro.html">Registro</a>
+    <a href="anotaciones.html">Anotaciones</a>
+  </nav>
+  <main>
+    <div class="flow">
+      <span class="box">List Report y Object Page</span>
+      <span>→</span>
+      <span class="box">proxy /odata</span>
+      <span>→</span>
+      <span class="box">localhost:4004 ComprasService</span>
+    </div>
+    <p>El proyecto <code>uicompras</code> es una plantilla Fiori Elements. Las rutas de <code>webapp/manifest.json</code> apuntan a <code>/OrdenesCompra</code>. No hay un controlador que pinte la tabla a mano: <code>sap.fe.templates.ListReport</code> y <code>ObjectPage</code> leen <code>$metadata</code>.</p>
+    <p>Para verlo hacen falta los dos procesos: <code>cds watch</code> en <code>compras-empresariales-cap</code> y <code>npm start</code> dentro de <code>uicompras</code>. El navegador pide usuario y contraseña del mock (<code>alice</code>/<code>alice</code> o <code>bob</code>/<code>bob</code>) porque el OData ya no es anónimo.</p>
+    <p>La arquitectura del servicio, el CRUD y los roles están en <code>compras-empresariales-cap/docs</code>.</p>
+  </main>
+</body>
+</html>
